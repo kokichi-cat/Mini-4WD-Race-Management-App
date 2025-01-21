@@ -1,8 +1,6 @@
 class EventsController < ApplicationController
-  before_action :require_login, unless: :twitterbot?
-
   # ログインを確認し、未ログインの場合は自動的にログインページへリダイレクトする
-  before_action :authenticate_user!, only: %i[new create show edit update destroy]
+  before_action :authenticate_user!, only: %i[new create edit update destroy]
   before_action :set_event, only: %i[show edit update destroy]
   before_action :authorize_user!, only: %i[edit update destroy]
 
@@ -56,8 +54,6 @@ class EventsController < ApplicationController
   def user_index
     @events = current_user.events.includes(:race_times).order(date: :desc, event_name: :asc, 'race_times.rap_time': :asc) # ログインユーザーのイベントのみ取得
   end
-
-
 
   def show
     @event = Event.find(params[:id])
