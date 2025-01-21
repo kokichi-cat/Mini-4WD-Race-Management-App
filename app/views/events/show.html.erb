@@ -3,14 +3,15 @@
 
 <div class="text-2xl mb-6 text-gray-600 text-center">
   <% image_url = @event.course_photos.first&.image_url %>
-  <% cache_buster = Time.now.to_i %>  <%# : 常に現在の時刻を使用 %>
+  <% cache_buster = Time.now.strftime("%Y%m%d%H%M%S") %> <%# 現在の時刻をYYYYMMDDHHMMSS形式で取得 %>
 
   <% if image_url.present? %>
     <% assign_meta_tags title: @event.event_name, image: "#{image_url}?v=#{cache_buster}" %>
   <% end %>
   
   <% twitter_text = "#{@event.event_name} 結果\n#ミニ四駆 #mini4wd #MINI4NOTE" %>
-  <% twitter_share_url = "https://twitter.com/share?url=#{CGI.escape(event_url(@event))}&text=#{CGI.escape(twitter_text)}" %>
+  <% event_url_with_time = "#{event_url(@event)}?time=#{cache_buster}" %> <%# URLに `time` パラメータを追加 %>
+  <% twitter_share_url = "https://twitter.com/share?url=#{CGI.escape(event_url_with_time)}&text=#{CGI.escape(twitter_text)}" %>
 
   <%= link_to twitter_share_url, target: '_blank', data: { toggle: "tooltip", placement: "bottom" }, title: "Xでシェア" do %>
     <%= image_tag 'x.svg', alt: 'Xシェアボタン', class: 'h-5 w-5' %>
