@@ -1,8 +1,10 @@
 class EventsController < ApplicationController
-    # ログインを確認し、未ログインの場合は自動的にログインページへリダイレクトする
-    before_action :authenticate_user!, only: %i[new create show edit update destroy]
-    before_action :set_event, only: %i[show edit update destroy]
-    before_action :authorize_user!, only: %i[edit update destroy]
+  before_action :require_login, unless: :twitterbot?
+
+  # ログインを確認し、未ログインの場合は自動的にログインページへリダイレクトする
+  before_action :authenticate_user!, only: %i[new create show edit update destroy]
+  before_action :set_event, only: %i[show edit update destroy]
+  before_action :authorize_user!, only: %i[edit update destroy]
 
 
   # レース記録作成
@@ -58,11 +60,6 @@ class EventsController < ApplicationController
 
 
   def show
-    if bot_request?
-      render layout: "public" # bot用の公開レイアウト（CSS適用可能）
-    else
-      authenticate_user!
-    end
     @event = Event.find(params[:id])
   end
 
@@ -149,8 +146,8 @@ class EventsController < ApplicationController
       redirect_to events_path
     end
   end
-end
 
-def bot_request?
-  request.user_agent.present? && request.user_agent.include?("Twitterbot")
+  def twitterbot?
+    request.user_agent.to_s.downcase.include?("twitterbot")
+  end
 end
