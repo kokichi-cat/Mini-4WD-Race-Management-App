@@ -3,7 +3,7 @@
 
 <div class="text-2xl mb-6 text-gray-600 text-center">
   <% image_url = @event.course_photos.first&.image_url %>
-  <% cache_buster = @event.updated_at.to_i if @event.updated_at.present? %>
+  <% cache_buster = Time.now.to_i %>  <%# : 常に現在の時刻を使用 %>
 
   <% if image_url.present? %>
     <% assign_meta_tags title: @event.event_name, image: "#{image_url}?v=#{cache_buster}" %>

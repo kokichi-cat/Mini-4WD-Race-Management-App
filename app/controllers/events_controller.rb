@@ -142,6 +142,4 @@ class EventsController < ApplicationController
       redirect_to events_path
     end
   end
-
-  
 end
