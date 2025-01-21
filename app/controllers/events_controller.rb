@@ -147,6 +147,12 @@ class EventsController < ApplicationController
     end
   end
 
+  def require_login
+    unless user_signed_in?
+      redirect_to login_path, alert: 'ログインしてください'
+    end
+  end
+
   def twitterbot?
     request.user_agent.to_s.downcase.include?("twitterbot")
   end
