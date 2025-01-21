@@ -155,6 +155,8 @@ class EventsController < ApplicationController
   end
 
   def require_login
+    return if twitterbot?  # ここでボットのリクエストをスキップ
+
     unless user_signed_in?
       redirect_to login_path, alert: "ログインしてください"
     end
