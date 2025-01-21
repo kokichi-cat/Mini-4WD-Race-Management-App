@@ -61,6 +61,13 @@ class EventsController < ApplicationController
 
   def show
     @event = Event.find(params[:id])
+    if twitterbot?
+      assign_meta_tags(
+        title: @event.title,
+        description: @event.description,
+        image: @event.image_url
+      )
+    end
   end
 
 
@@ -149,7 +156,7 @@ class EventsController < ApplicationController
 
   def require_login
     unless user_signed_in?
-      redirect_to login_path, alert: 'ログインしてください'
+      redirect_to login_path, alert: "ログインしてください"
     end
   end
 
