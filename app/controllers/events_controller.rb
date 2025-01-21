@@ -158,7 +158,7 @@ class EventsController < ApplicationController
     return if twitterbot?  # ここでボットのリクエストをスキップ
 
     unless user_signed_in?
-      redirect_to login_path, alert: "ログインしてください"
+      redirect_to new_user_session_path, alert: "ログインしてください"
     end
   end
 
