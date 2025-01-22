@@ -107,3 +107,5 @@
   <%= link_to '削除', event_path(@event), method: :delete, data: { confirm: '本当に削除しますか？' }, class: 'btn bg-pink-500 text-white hover:bg-pink-400' %>
 <% end %>
 <%= link_to "戻る", events_path, class: "btn btn-outline mt-6" %>
+
+<%= debug @event.course_photos.first.image_url %>
