@@ -1,25 +1,13 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <%= favicon_link_tag 'MINI4NOTE.png' %>
+    <%= favicon_link_tag image_path('favicon.ico') %>
+    <!-- Apple Touch Icon (iOS のホーム画面アイコン) -->
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
 
-    <!-- Apple Touch Icon -->
-    <link rel="apple-touch-icon" href="<%= asset_path('MINI4NOTE.png') %>">
 
-    <!-- Open Graph (OG) Metadata -->
-    <meta property="og:title" content="MINI4NOTE">
-    <meta property="og:description" content="MINI4NOTE  〜レース記録を記録しよう〜">
-    <meta property="og:image" content="<%= asset_path('MINI4NOTE.png') %>">
-    <meta property="og:url" content="<%= root_url %>">
-    <meta property="og:type" content="website">
+    <%= show_meta_tags %> <!-- メタタグを表示する -->
 
-    <!-- Twitter Card Metadata -->
-    <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="MINI4NOTE">
-    <meta name="twitter:description" content="MINI4NOTE  〜レース記録を記録しよう〜 #MINI4NOTE #ミニ四駆 ">
-    <meta name="twitter:image" content="<%= asset_path('MINI4NOTE.png') %>">
-
-    <title></title>
     <meta name="viewport" content="width=device-width,initial-scale=1" />
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>

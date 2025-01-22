@@ -1,4 +1,5 @@
 class CoursePhotoUploader < CarrierWave::Uploader::Base
+  include CarrierWave::MiniMagick
   # Include RMagick or MiniMagick support:
   # include CarrierWave::RMagick
   # include CarrierWave::MiniMagick
@@ -9,7 +10,12 @@ class CoursePhotoUploader < CarrierWave::Uploader::Base
   else
     storage :file
   end
-  # storage :fog
+
+  # アップロード時に画像をリサイズ＆圧縮
+  process resize_to_fill: [ 600, 600 ] # 幅200px、高さ200pxに統一
+  # process resize_to_limit: [1200, 630] # TwitterのOGP推奨サイズ
+  # process :compress
+
 
   # Override the directory where uploaded files will be stored.
   # This is a sensible default for uploaders that are meant to be mounted:
@@ -42,6 +48,17 @@ class CoursePhotoUploader < CarrierWave::Uploader::Base
   def extension_allowlist
     %w[jpg jpeg gif png]
   end
+
+  private
+
+  # 画像を圧縮 (画質80%)
+  # def compress
+  #   manipulate! do |img|
+  #     img.quality "80"
+  #     img = yield(img) if block_given?
+  #     img
+  #   end
+  # end
 
   # Override the filename of the uploaded files:
   # Avoid using model.id or version_name here, see uploader/store.rb for details.

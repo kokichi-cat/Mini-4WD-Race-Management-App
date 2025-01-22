@@ -1,6 +1,26 @@
 <!-- app/views/events/show.html.erb -->
 <h1 class="text-3xl font-bold mb-4 text-gray-700"><%= @event.event_name %></h1>
 
+<div class="text-2xl mb-6 text-gray-600 text-center">
+  <% image_url = @event.course_photos.first&.image_url %>
+  <% cache_buster = Time.now.strftime("%Y%m%d%H%M%S") %> <%# 現在の時刻をYYYYMMDDHHMMSS形式で取得 %>
+
+  <% if image_url.present? %>
+    <% assign_meta_tags title: @event.event_name, image: "#{image_url}?v=#{cache_buster}" %>
+  <% end %>
+  
+  <% twitter_text = "#{@event.event_name} 結果\n#ミニ四駆 #mini4wd #MINI4NOTE" %>
+  <% event_url_with_time = "#{event_url(@event)}?time=#{cache_buster}" %> <%# URLに `time` パラメータを追加 %>
+  <% twitter_share_url = "https://twitter.com/share?url=#{CGI.escape(event_url_with_time)}&text=#{CGI.escape(twitter_text)}" %>
+
+  <%= link_to twitter_share_url, target: '_blank', data: { toggle: "tooltip", placement: "bottom" }, title: "Xでシェア" do %>
+    <%= image_tag 'x.svg', alt: 'Xシェアボタン', class: 'h-5 w-5' %>
+  <% end %>
+</div>
+
+
+
+
 <div class="mb-6">
   <p>Date: <%= @event.date %></p>
   <p>天気: <%= @event.weather %></p>
@@ -25,7 +45,7 @@
 <div class="grid grid-cols-3 gap-4">
   <% @event.course_photos.each do |photo| %>
     <div class="w-full">
-      <%= image_tag photo.image_url.url, class: "rounded shadow-lg" if photo.image_url.present? %>
+      <%= image_tag photo.image_url.url, class: "photo-img" if photo.image_url.present? %>
     </div>
   <% end %>
 </div>
@@ -87,3 +107,4 @@
   <%= link_to '削除', event_path(@event), method: :delete, data: { confirm: '本当に削除しますか？' }, class: 'btn bg-pink-500 text-white hover:bg-pink-400' %>
 <% end %>
 <%= link_to "戻る", events_path, class: "btn btn-outline mt-6" %>
+
