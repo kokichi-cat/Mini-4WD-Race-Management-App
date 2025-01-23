@@ -5,15 +5,15 @@ module ApplicationHelper
     end
 
     def assign_meta_tags(options = {})
-        defaults = t('meta_tags.defaults')
+        defaults = t("meta_tags.defaults")
         options.reverse_merge!(defaults)
         site = options[:site]
         title = options[:title]
         description = options[:description]
         keywords = options[:keywords]
-        image = options[:image].presence || image_url('ogp.png')
+        image = options[:image].presence || image_url("ogp.png")
         configs = {
-        separator: '|',
+        separator: "|",
         reverse: true,
         site:,
         title:,
@@ -21,10 +21,10 @@ module ApplicationHelper
         keywords:,
         canonical: request.original_url,
         icon: {
-            href: image_url('ogp.png')
+            href: image_url("ogp.png")
         },
         og: {
-            type: 'website',
+            type: "website",
             title: title.presence || site,
             description:,
             url: request.original_url,
@@ -33,7 +33,7 @@ module ApplicationHelper
         },
         twitter: {
             site:,
-            card: 'summary_large_image',
+            card: "summary_large_image",
             image:
         }
         }
