@@ -1,6 +1,9 @@
 <!-- app/views/events/show.html.erb -->
 <h1 class="text-3xl font-bold mb-4 text-gray-700"><%= @event.event_name %></h1>
 
+<% assign_meta_tags title: @event.event_name, image: @event.course_photos.first.image_url.url %>
+
+
 <div class="mb-6">
   <p>Date: <%= @event.date %></p>
   <p>天気: <%= @event.weather %></p>

@@ -74,3 +74,5 @@ gem "omniauth-github"
 gem "dotenv-rails"
 
 gem "mini_magick"
+
+gem "meta-tags"
