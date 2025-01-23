@@ -20,9 +20,10 @@ module ApplicationHelper
         description:,
         keywords:,
         canonical: request.original_url,
-        icon: {
-            href: image_url("ogp.png")
-        },
+        icon: [
+            { href: image_url("MINI4NOTE.png") },
+            { href: image_url("MINI4NOTE.png"), rel: "apple-touch-icon", sizes: "180x180", type: "image/png" }
+        ],
         og: {
             type: "website",
             title: title.presence || site,
