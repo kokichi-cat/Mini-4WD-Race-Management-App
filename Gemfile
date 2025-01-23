@@ -72,3 +72,5 @@ gem "omniauth-google-oauth2"
 gem "omniauth-github"
 
 gem "dotenv-rails"
+
+gem "mini_magick"

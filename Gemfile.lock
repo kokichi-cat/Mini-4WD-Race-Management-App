@@ -415,6 +415,7 @@ DEPENDENCIES
   fog-aws
   jbuilder
   jsbundling-rails
+  mini_magick
   omniauth
   omniauth-github
   omniauth-google-oauth2
