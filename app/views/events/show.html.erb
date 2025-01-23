@@ -1,8 +1,8 @@
 <!-- app/views/events/show.html.erb -->
 <% assign_meta_tags title: @event.event_name, image: @event.course_photos.first.image_url if @event.course_photos.any? %>
 <% timestamp = Time.now.to_i %>
-<% share_url = event_url(@event, timestamp: timestamp) %>
-<% share_text = "\n#ミニ四駆 #MINI4NOTE" %>
+<% share_url = "#{event_url(@event)}?t=#{timestamp}" %>
+<% share_text = "#{@event.event_name} 結果\n#ミニ四駆 #MINI4NOTE" %>
 
 <div class="flex items-center space-x-4">
   <h1 class="text-3xl font-bold text-gray-700"><%= @event.event_name %></h1>
