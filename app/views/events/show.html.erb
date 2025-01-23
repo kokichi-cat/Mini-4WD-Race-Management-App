@@ -1,5 +1,19 @@
 <!-- app/views/events/show.html.erb -->
-<h1 class="text-3xl font-bold mb-4 text-gray-700"><%= @event.event_name %></h1>
+<% assign_meta_tags title: @event.event_name, image: @event.course_photos.first.image_url if @event.course_photos.any? %>
+<% timestamp = Time.now.to_i %>
+<% share_url = event_url(@event, timestamp: timestamp) %>
+<% share_text = "#{@event.event_name}\結果\n#ミニ四駆 #MINI4NOTE" %>
+
+<div class="flex items-center space-x-4">
+  <h1 class="text-3xl font-bold text-gray-700"><%= @event.event_name %></h1>
+
+  <a href="https://twitter.com/intent/tweet?text=<%= CGI.escape(share_text) %>&url=<%= CGI.escape(share_url) %>" 
+     target="_blank" rel="noopener noreferrer">
+    <img src="<%= asset_path('x.svg') %>" alt="Xでシェア" class="w-6 h-6 md:w-5 md:h-5 hover:opacity-70">
+  </a>
+</div>
+
+
 
 <div class="mb-6">
   <p>Date: <%= @event.date %></p>
