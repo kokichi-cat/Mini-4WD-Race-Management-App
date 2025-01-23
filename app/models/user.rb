@@ -1,4 +1,5 @@
 class User < ApplicationRecord
+  mount_uploader :profile_picture, ProfilePictureUploader
   # Include default devise modules. Others available are:
   # :lockable, :timeoutable, :trackable and :omniauthable
   devise :database_authenticatable, :registerable,

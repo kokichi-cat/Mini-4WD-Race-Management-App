@@ -37,8 +37,14 @@
 
           <!-- ユーザー名 -->
           <% unless local_assigns[:hide_user_name] %> <!-- 条件分岐でユーザー名を制御 -->
-            <td><%= event.user.name %></td>
-          <% end %>
+            <td>
+              <% if user_signed_in? %>
+                <%= link_to event.user.name, user_path(event.user), class: "text-blue-500 hover:underline" %>
+              <% else %>
+                <%= event.user.name %> <!-- ログインしていない場合はリンクなし -->
+              <% end %>
+            </td>
+          <% end %> <!-- 条件分岐の終了 -->
         </tr>
       <% end %>
     </tbody>
