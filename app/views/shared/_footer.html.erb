@@ -18,11 +18,20 @@
     <% end %>
 
     <!-- マイページリンク（仮置き） -->
-    <%= link_to mypage_path, class: "flex flex-col items-center text-gray-400 cursor-not-allowed" do %>
-      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 mb-1">
-        <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 7.5A3.75 3.75 0 1 1 12 3.75 3.75 3.75 0 0 1 15.75 7.5ZM12 12a8.25 8.25 0 0 1 8.25 8.25v.75H3.75v-.75A8.25 8.25 0 0 1 12 12Z" />
-      </svg>
-      <span>マイページ（準備中）</span>
-    <% end %>
+    <% if user_signed_in? %>
+      <%= link_to mypage_path, class: "flex flex-col items-center hover:text-gray-400" do %>
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 mb-1">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 7.5A3.75 3.75 0 1 1 12 3.75 3.75 3.75 0 0 1 15.75 7.5ZM12 12a8.25 8.25 0 0 1 8.25 8.25v.75H3.75v-.75A8.25 8.25 0 0 1 12 12Z" />
+        </svg>
+        <span>マイページ</span>
+      <% end %>
+    <% else %>
+      <span class="flex flex-col items-center text-gray-400 cursor-not-allowed">
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 mb-1">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 7.5A3.75 3.75 0 1 1 12 3.75 3.75 3.75 0 0 1 15.75 7.5ZM12 12a8.25 8.25 0 0 1 8.25 8.25v.75H3.75v-.75A8.25 8.25 0 0 1 12 12Z" />
+        </svg>
+        <span>ログインしてください</span>
+      </span>
+    <% end %>  
   </div>
 </footer>

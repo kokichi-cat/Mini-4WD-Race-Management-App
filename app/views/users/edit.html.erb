@@ -1,0 +1,20 @@
+<h2 class="text-xl font-bold mb-4">プロフィール編集</h2>
+
+<%= form_for @user, html: { multipart: true } do |f| %>
+  <div class="mb-4">
+    <%= f.label :profile_picture, "写真" %>
+    <%= f.file_field :profile_picture, class: "block mt-2" %>
+  </div>
+
+  <div class="mb-4">
+    <%= f.label :name, "名前" %>
+    <%= f.text_field :name, class: "block w-full p-2 border rounded" %>
+  </div>
+
+  <div class="mb-4">
+    <%= f.label :introduction, "自己紹介" %>
+    <%= f.text_area :introduction, class: "block w-full p-2 border rounded" %>
+  </div>
+
+  <%= f.submit "更新", class: "btn bg-orange-500 text-white hover:bg-orange-300" %>
+<% end %>

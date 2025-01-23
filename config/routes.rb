@@ -5,6 +5,8 @@ Rails.application.routes.draw do
     omniauth_callbacks: "users/omniauth_callbacks",
     passwords: "users/passwords" # パスワードリセットのため
   }
+  get "mypage", to: "users#show", as: :mypage
+  resources :users, only: [ :show, :edit, :update ] # ユーザープロフィールの表示・編集・更新
 
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 
@@ -29,5 +31,4 @@ Rails.application.routes.draw do
   get "terms", to: "static_pages#terms", as: :terms
   get "privacy", to: "static_pages#privacy", as: :privacy
   # get "contact", to: "static_pages#contact", as: :contact　独自の回答フォームを作成したくなったらコメントアウト外す
-  get "mypage", to: "users#mypage", as: :mypage
 end
