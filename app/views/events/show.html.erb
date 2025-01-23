@@ -1,9 +1,8 @@
 <!-- app/views/events/show.html.erb -->
 <% assign_meta_tags title: @event.event_name, image: @event.course_photos.first.image_url if @event.course_photos.any? %>
-<% timestamp = Time.now.to_i.to_s %>  <%# タイムスタンプを取得し、文字列に変換 %>
-<% share_url = "#{event_url(@event)}?t=#{timestamp}" %> <%# t=タイムスタンプ の形式でURLを作成 %>
-
-<% share_text = "#{@event.event_name}\n結果\n#ミニ四駆 #MINI4NOTE" %>
+<% timestamp = Time.now.to_i %>
+<% share_url = event_url(@event, timestamp: timestamp) %>
+<% share_text = "#{@event.event_name}\結果\n#ミニ四駆 #MINI4NOTE" %>
 
 <div class="flex items-center space-x-4">
   <h1 class="text-3xl font-bold text-gray-700"><%= @event.event_name %></h1>
@@ -13,7 +12,6 @@
     <img src="<%= asset_path('x.svg') %>" alt="Xでシェア" class="w-6 h-6 md:w-5 md:h-5 hover:opacity-70">
   </a>
 </div>
-
 
 
 
