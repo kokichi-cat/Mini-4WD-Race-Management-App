@@ -1,5 +1,5 @@
 class UsersController < ApplicationController
-  before_action :authenticate_user!, only: [:show, :edit, :update] # ログインユーザーのみ編集可能
+  before_action :authenticate_user!, only: [ :show, :edit, :update ] # ログインユーザーのみ編集可能
 
   def show
     if params[:id] # 他人のページを見ようとしている場合
@@ -17,7 +17,7 @@ class UsersController < ApplicationController
   def update
     @user = current_user
     if @user.update(user_params)
-      redirect_to @user, notice: 'プロフィールを更新しました。'
+      redirect_to @user, notice: "プロフィールを更新しました。"
     else
       render :edit
     end
