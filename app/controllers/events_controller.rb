@@ -1,6 +1,6 @@
 class EventsController < ApplicationController
     # ログインを確認し、未ログインの場合は自動的にログインページへリダイレクトする
-    before_action :authenticate_user!, only: %i[new create show edit update destroy]
+    before_action :authenticate_user!, only: %i[new create edit update destroy]
     before_action :set_event, only: %i[show edit update destroy]
     before_action :authorize_user!, only: %i[edit update destroy]
 
