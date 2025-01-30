@@ -5,7 +5,7 @@
 <% share_text = "#{@event.event_name} 結果\n#ミニ四駆 #MINI4NOTE" %>
 
 <div class="flex items-center space-x-4">
-  <h1 class="text-3xl font-bold text-gray-700"><%= @event.event_name %></h1>
+  <h1 class="text-5xl font-bold text-gray-700"><%= @event.event_name %></h1>
 
   <a href="https://twitter.com/intent/tweet?text=<%= CGI.escape(share_text) %>&url=<%= CGI.escape(share_url) %>" 
      target="_blank" rel="noopener noreferrer">
@@ -15,16 +15,17 @@
 
 
 
-<div class="mb-6">
-  <p>Date: <%= @event.date %></p>
+<div class="mb-6 mt-4 space-y-2">
+  <p>日付: <%= @event.date %></p>
   <p>天気: <%= @event.weather %></p>
   <p>会場温度: <%= @event.temperature %>℃</p>
   <p>会場: <%= @event.venue %></p>
   <p>コメント: <%= @event.coment %></p>
 </div>
 
-<h2 class="text-2xl font-semibold mb-4">ラップタイム</h2>
-<ul>
+<h2 class="text-2xl font-semibold mb-4 border-t border-gray-400 pt-4">ラップタイム</h2>
+
+<ul class="mb-6 mt-4 space-y-2">
   <% @event.race_times.each do |time| %>
     <% if time.rap_time.present? %>
       <li>ラップタイム: <%= time.rap_time.round(2) %> s</li>
@@ -35,7 +36,7 @@
   <% end%>
 </ul>
 
-<h3 class="text-xl font-semibold mt-6 mb-4">コース写真</h3>
+<h3 class="text-2xl font-semibold  mb-4 border-t border-gray-400 pt-4">コース写真</h3>
 <div class="grid grid-cols-3 gap-4">
   <% @event.course_photos.each do |photo| %>
     <div class="w-full">
@@ -45,23 +46,28 @@
 </div>
 
 
-<h2 class="text-2xl font-semibold mt-6 mb-4">マシン情報</h2>
+<h2 class="text-2xl font-semibold mt-6 mb-4 border-t border-gray-400 pt-4">マシン情報</h2>
 <% @event.machines.each do |machine| %>
   <div class="mb-6 rounded-lg">
     <h3 class="text-xl font-semibold">マシン名: <%= machine.machine_name %></h3>
-    <p>モーター: <%= I18n.t("activerecord.attributes.machine.motor.#{machine.motor}") %></p>
-    <p>ギア比: <%= I18n.t("activerecord.attributes.machine.gear_ratio.#{machine.gear_ratio}") %></p>
-    <p>ボディ: <%= machine.body %></p>
-    <p>シャーシ: <%= I18n.t("activerecord.attributes.machine.frame.#{machine.frame}") %></p>
-    <p>タイヤ径: <%= machine.tire_diameter %> mm</p>
-    <p>タイヤ種: <%= machine.tire_type %></p>
     
-    <% if @event.user == current_user %>
-      <p>電圧: <%= machine.voltage.present? ? format('%.2f', machine.voltage) : '未登録' %> V</p>
-      <p>時速: <%= machine.speed %> km/h</p>
-      <p>メモ: <%= machine.other_comments %></p>
+    <div class="mb-6 mt-4 space-y-2">  
+      <p>モーター: <%= I18n.t("activerecord.attributes.machine.motor.#{machine.motor}") %></p>
+      <p>ギア比: <%= I18n.t("activerecord.attributes.machine.gear_ratio.#{machine.gear_ratio}") %></p>
+      <p>ボディ: <%= machine.body %></p>
+      <p>シャーシ: <%= I18n.t("activerecord.attributes.machine.frame.#{machine.frame}") %></p>
+      <p>タイヤ径: <%= machine.tire_diameter %> mm</p>
+      <p>タイヤ種: <%= machine.tire_type %></p>
+      
+      <% if @event.user == current_user %>
+        <p>電圧: <%= machine.voltage.present? ? format('%.2f', machine.voltage) : '未登録' %> V</p>
+        <p>時速: <%= machine.speed %> km/h</p>
+        <p>メモ: <%= machine.other_comments %></p>
+      <% end %>
+    </div>  
 
-      <h4 class="text-lg font-semibold mt-4">マシン写真</h4>
+    <% if @event.user == current_user %>
+      <h4 class="text-2xl font-semibold  mb-4 border-t border-gray-400 pt-4">マシン写真</h4>
       <div class="grid grid-cols-3 gap-4">
         <% machine.machine_photos.each do |photo| %>
           <div class="w-full">
@@ -73,6 +79,7 @@
   </div>
 <% end %>
 
+
 <div class="flex flex-wrap gap-2 mt-4">
   <% @event.tags.each do |tag| %>
     <%= link_to "# #{tag.name}", events_path(tag: tag.name), class: "px-3 py-1 bg-orange-500 hover:bg-orange-300 text-white rounded-full text-sm shadow" %>
@@ -80,19 +87,22 @@
 </div>
 
 <% if @event.link.present? %>
-  <p>リンク:</p>
-    <ul class="list-disc pl-5">
-      <% if @event.links.any? %>
-        <% @event.links.each do |url| %>
-          <li>
-            <%= link_to url, url, target: "_blank", rel: "noopener noreferrer", class: "text-blue-500 hover:underline" %>
-          </li>
-        <% end %>
-      <% else %>
-        <li></li>
+  <ul class="mb-6 mt-4 list-none pl-0">
+    <% if @event.links.any? %>
+      <% @event.links.each do |url| %>
+        <li class="flex items-center space-x-2"> 
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5 text-blue-500">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M13.19 8.688a4.5 4.5 0 0 1 1.242 7.244l-4.5 4.5a4.5 4.5 0 0 1-6.364-6.364l1.757-1.757m13.35-.622 1.757-1.757a4.5 4.5 0 0 0-6.364-6.364l-4.5 4.5a4.5 4.5 0 0 0 1.242 7.244" />
+          </svg>
+          <%= link_to url, url, target: "_blank", rel: "noopener noreferrer", class: "text-blue-500 hover:underline" %>
+        </li>
       <% end %>
-    </ul>
+    <% else %>
+      <li class="text-gray-500">リンクなし</li>
+    <% end %>
+  </ul>
 <% end %>
+
 
 
 

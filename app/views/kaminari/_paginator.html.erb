@@ -1,11 +1,18 @@
-<div class="join text-xm mt-8 mx-auto flex justify-center">
+<div class="join text-xs mt-8 mx-auto flex justify-center">
   <%= paginator.render do %>
-    <nav class="pagination" role="navigation" aria-label="pager">
-      <%= prev_page_tag unless current_page.first? %>
-      
+    <nav class="pagination flex gap-2" role="navigation" aria-label="pager">
+      <%= prev_page_tag unless current_page.first? %> 
+
       <% each_page do |page| %>
         <% if page.display_tag? %>
-          <%= page_tag page %>
+          <% if page.current? %>
+            <span class="btn text-white bg-[#60A5FA] border-[#60A5FA] hover:bg-[#3B82F6] hover:border-[#3B82F6]">
+              <%= page %>
+            </span>  
+          <% else %>
+            <%= link_to page, url_for(page: page), 
+                class: "btn text-white bg-[#60A5FA] border-[#60A5FA] hover:bg-[#3B82F6] hover:border-[#3B82F6]" %>
+          <% end %>
         <% end %>
       <% end %>
 
