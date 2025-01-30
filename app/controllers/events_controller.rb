@@ -15,6 +15,7 @@ class EventsController < ApplicationController
   def index
     @events = Event.includes(:user, :race_times, :tags)
 
+
     if params[:tag].present?
       @events = @events.joins(:tags).where("tags.name LIKE ?", "%#{params[:tag]}%")# .distinct
       # else
@@ -37,6 +38,17 @@ class EventsController < ApplicationController
 
     # 検索条件が何も指定されていない場合、全てのイベントを取得
     @events = @events.order(date: :desc, event_name: :asc, 'race_times.rap_time': :asc)
+    # .page(params[:page])
+    # .per(10)
+
+
+    # # DISTINCT を適用してページネーションで重複を避ける
+    # @events = @events.distinct.order(date: :desc, event_name: :asc, 'race_times.rap_time': :asc)
+
+    # ページネーション適用
+    @events = @events.page(params[:page]).per(10)
+
+
 
     # if params[:tag].blank? && params[:event_name].blank? && params[:venue].blank? && params[:user_name].blank?
     #   @events = Event.includes(:user, :race_times)
@@ -52,7 +64,24 @@ class EventsController < ApplicationController
 
   # ログインユーザーだけのレース一覧
   def user_index
-    @events = current_user.events.includes(:race_times).order(date: :desc, event_name: :asc, 'race_times.rap_time': :asc) # ログインユーザーのイベントのみ取得
+    @events = current_user.events.includes(:race_times, :tags)
+
+    if params[:tag].present?
+      @events = @events.joins(:tags).where("tags.name LIKE ?", "%#{params[:tag]}%")
+    end
+
+    if params[:event_name].present?
+      @events = @events.where("event_name LIKE ?", "%#{params[:event_name]}%")
+    end
+
+    if params[:venue].present?
+      @events = @events.where("venue LIKE ?", "%#{params[:venue]}%")
+    end
+
+    # 日付順（最新のイベントが先）
+    @events = @events.order(date: :desc)
+
+    @events = @events.page(params[:page]).per(10)
   end
 
 

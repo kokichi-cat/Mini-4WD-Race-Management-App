@@ -2,13 +2,16 @@ class UsersController < ApplicationController
   before_action :authenticate_user!, only: [ :show, :edit, :update ] # ログインユーザーのみ編集可能
 
   def show
-    if params[:id] # 他人のページを見ようとしている場合
-      @user = User.find(params[:id])
-    else # 自分のマイページを開こうとしている場合
-      @user = current_user
-    end
-    @events = @user.events # ユーザーが持つイベントを取得
+    @user = params[:id] ? User.find(params[:id]) : current_user
+
+    @events = @user.events
+                   .left_joins(:race_times) # race_timesがないイベントも取得
+                   .select("events.*, COALESCE(MIN(race_times.rap_time), 999999) AS min_rap_time")
+                   .group("events.id") # イベント単位でグループ化
+                   .order(date: :desc, min_rap_time: :asc) # 日付降順、ラップタイム昇順
+                   .page(params[:page]).per(10)
   end
+
 
   def edit
     @user = current_user # 自分だけ編集可能
