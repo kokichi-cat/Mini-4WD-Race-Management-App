@@ -1,0 +1,7 @@
+<span class="next">
+  <%= link_to_unless current_page.last?, 
+        t('views.pagination.next').html_safe, 
+        url, 
+        class: "join-item btn text-white bg-[#60A5FA] border-[#60A5FA] hover:bg-[#3B82F6] hover:border-[#3B82F6]", 
+        rel: 'next' %>
+</span>

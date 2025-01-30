@@ -12,5 +12,6 @@
   <div class="container mx-auto py-4">
     <!-- 共通テンプレートの呼び出し -->
     <%= render 'events/event_list', events: @events, hide_user_name: true %>
+    <%= paginate @events %>
   </div>
 </div>

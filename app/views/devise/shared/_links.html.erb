@@ -18,7 +18,4 @@
   <% if devise_mapping.lockable? && resource_class.unlock_strategy_enabled?(:email) && controller_name != 'unlocks' %>
     <%= link_to "アカウントロック解除のメールが届いていませんか？", new_unlock_path(resource_name), class: "btn btn-outline btn-error w-full" %>
   <% end %>
-
-  
-
 </div>

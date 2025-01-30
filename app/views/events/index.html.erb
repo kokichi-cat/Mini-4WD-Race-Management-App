@@ -2,24 +2,9 @@
   <h1 class="text-2xl font-bold text-center mb-6">みんなのイベント結果一覧</h1>
 
     <!-- 共通検索フォーム呼び出し -->
-    <%= render 'search_form', search_path: events_path, show_user_name: true %>
-    <!--
-    <div class="mb-6">
-    <%= form_with url: events_path, method: :get, local: true, class: "form-control mx-auto" do |f| %>
-        <div class="mb-6 flex">
-        <%= f.text_field :tag, placeholder: "タグを入力", class: "input input-bordered w-1/6 flex-1" %>
-        <%= f.text_field :event_name, placeholder: "大会名を入力", class: "input input-bordered w-1/6 flex-1" %>
-        <%= f.text_field :venue, placeholder: "会場名を入力", class: "input input-bordered w-1/6 flex-1" %>
-        <%= f.text_field :user_name, placeholder: "ユーザー名を入力", class: "input input-bordered w-1/6 flex-1" %>
-        <%= f.submit "検索", class: "btn btn-primary" %>
-        </div>
-    <% end %>
-    -->
-
-    </div>
-
-    
+    <%= render 'search_form', search_path: events_path, show_user_name: true %> 
 
     <!-- 共通テンプレートの呼び出し -->
     <%= render 'event_list', events: @events %>
+    <%= paginate @events %>  
 </div>

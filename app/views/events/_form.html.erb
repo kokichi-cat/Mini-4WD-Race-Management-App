@@ -18,12 +18,6 @@
     </div>
 
     <div class="form-control mb-4">
-      <%= f.label :link, "会場、イベントリンク (任意,複数のリンクはカンマで区切って入力してください)" %>
-      <%= f.text_area :link, class: "textarea textarea-bordered w-full", placeholder: "例: https://example.com, https://another.com" %>
-    </div>
-
-    
-    <div class="form-control mb-4">
       <%= f.label :weather, "天気", class: "label-text" %>
       <%= f.text_field :weather, class: "input input-bordered" %>
     </div>
@@ -154,12 +148,17 @@
 
     <div class="form-control mb-4">
       <%= machine.label :body, "ボディ", class: "label-text" %>
-      <%= machine.text_area :body, class: "input input-bordered" %>
+      <%= machine.text_field :body, class: "input input-bordered" %>
     </div>
 
     <div class="form-control mb-4">
       <%= f.label :tag_list, "タグ（カンマ区切りで入力）" , class: "label-text"%>
       <%= f.text_field :tag_list, class: "input input-bordered" %>
+    </div>
+
+    <div class="form-control mb-4">
+      <%= f.label :link, "会場、イベントリンク (任意,複数のリンクはカンマで区切って入力)" %>
+      <%= f.text_area :link, class: "textarea textarea-bordered w-full", placeholder: "例: https://example.com, https://another.com" %>
     </div>
         
     <% end %>

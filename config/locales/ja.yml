@@ -210,3 +210,7 @@ ja:
       description: "ミニ四駆のレース、大会結果を記録しよう！"
       keywords: "ミニ四駆, レース, 大会, 記録,MINI4NOTE"
       title: "MINI4NOTE"
+  views:
+    pagination:
+      previous: "前へ"
+      next: "次へ"

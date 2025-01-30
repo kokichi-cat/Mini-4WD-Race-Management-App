@@ -76,3 +76,5 @@ gem "dotenv-rails"
 gem "mini_magick"
 
 gem "meta-tags"
+
+gem "kaminari"
