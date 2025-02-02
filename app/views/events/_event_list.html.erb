@@ -1,14 +1,14 @@
 <!-- イベント結果一覧 -->
 <div class="overflow-x-auto">
-  <table class="table w-full ">
-    <thead class="sticky top-0 ">
+  <table class="table w-full text-center"> <!-- テーブル全体を中央揃え -->
+    <thead class="sticky top-0">
       <tr>
-      <th class="text-lg font-bold">Date</th>
-      <th class="text-lg font-bold">大会名</th>
-      <th class="text-lg font-bold">会場名</th>
-      <th class="text-lg font-bold">Time[s]</th>
-        <% unless local_assigns[:hide_user_name] %> <!-- 条件分岐でユーザー名の列を制御 -->
-        <th class="text-lg font-bold">User</th>
+        <th class="text-lg font-bold">Date</th>
+        <th class="text-lg font-bold">大会名</th>
+        <th class="text-lg font-bold">会場名</th>
+        <th class="text-lg font-bold">Time[s]</th>
+        <% unless local_assigns[:hide_user_name] %>
+          <th class="text-lg font-bold">User</th>
         <% end %>
       </tr>
     </thead>
@@ -16,18 +16,18 @@
       <% @events.each do |event| %>
         <tr>
           <!-- 日付 -->
-          <td><%= event.date.strftime("%y/%m/%d") %></td>
+          <td class="text-center"><%= event.date.strftime("%y/%m/%d") %></td>
             
           <!-- 大会名 -->
-          <td class="word-wrap">
+          <td class="text-center word-wrap">
             <%= link_to event.event_name, event_path(event), class: "text-blue-500 underline" %>
           </td>
             
           <!-- 会場名 -->
-          <td class="word-wrap"><%= event.venue %></td>
+          <td class="text-center word-wrap"><%= event.venue %></td>
             
           <!-- タイム -->
-          <td>
+          <td class="text-center">
             <% if event.race_times.present? %>
               <% event.race_times.each do |race_time| %>
                 <div><%= number_with_precision(race_time.rap_time, precision: 2) %></div>
@@ -38,18 +38,17 @@
           </td>
 
           <!-- ユーザー名 -->
-          <% unless local_assigns[:hide_user_name] %> <!-- 条件分岐でユーザー名を制御 -->
-            <td>
+          <% unless local_assigns[:hide_user_name] %>
+            <td class="text-center">
               <% if user_signed_in? %>
                 <%= link_to event.user.name, user_path(event.user), class: "text-blue-500 hover:underline" %>
               <% else %>
-                <%= event.user.name %> <!-- ログインしていない場合はリンクなし -->
+                <%= event.user.name %>
               <% end %>
             </td>
-          <% end %> <!-- 条件分岐の終了 -->
+          <% end %>
         </tr>
       <% end %>
     </tbody>
   </table>
 </div>
-
