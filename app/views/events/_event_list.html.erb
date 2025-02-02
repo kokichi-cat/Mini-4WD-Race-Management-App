@@ -19,10 +19,12 @@
           <td><%= event.date.strftime("%y/%m/%d") %></td>
             
           <!-- 大会名 -->
-          <td><%= link_to event.event_name, event_path(event), class: "text-blue-500 underline" %></td>
+          <td class="word-wrap">
+            <%= link_to event.event_name, event_path(event), class: "text-blue-500 underline" %>
+          </td>
             
           <!-- 会場名 -->
-          <td><%= event.venue %></td>
+          <td class="word-wrap"><%= event.venue %></td>
             
           <!-- タイム -->
           <td>
