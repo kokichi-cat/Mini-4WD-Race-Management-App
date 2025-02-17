@@ -60,7 +60,7 @@ end
 
 gem "devise"
 
-gem "carrierwave", "2.2.2"
+gem "carrierwave", "3.1.1"
 
 gem "fog-aws"
 
