@@ -78,3 +78,5 @@ gem "mini_magick"
 gem "meta-tags"
 
 gem "kaminari"
+
+gem "lightbox2"

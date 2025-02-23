@@ -32,9 +32,11 @@
 <h3 class="text-2xl font-semibold  mb-4 border-t border-gray-400 pt-4">コース写真</h3>
 <div class="grid grid-cols-3 gap-4">
   <% @event.course_photos.each do |photo| %>
-    <div class="w-full">
-      <%= image_tag photo.image_url.url, class: "rounded shadow-lg" if photo.image_url.present? %>
-    </div>
+    <% if photo.image_url.present? %>
+      <a href="<%= photo.image_url.url %>" data-lightbox="course-gallery" data-turbo="false" title="コース写真">
+        <%= image_tag photo.image_url.url, class: "rounded shadow-lg w-full h-auto" %>
+      </a>
+    <% end %>
   <% end %>
 </div>
 
@@ -64,7 +66,11 @@
       <div class="grid grid-cols-3 gap-4">
         <% machine.machine_photos.each do |photo| %>
           <div class="w-full">
-            <%= image_tag photo.image_url.url, class: "rounded shadow-lg" if photo.image_url.present? %>
+            <% if photo.image_url.present? %>
+              <%= link_to photo.image_url.url, data: { lightbox: "machine-gallery", title: "マシン写真", turbo: "false" } do %>
+                <%= image_tag photo.image_url.url, class: "rounded shadow-lg w-full h-auto" %>
+              <% end %>
+            <% end %>
           </div>
         <% end %>
       </div>
@@ -96,30 +102,36 @@
   </ul>
 <% end %>
 
-<div class="flex items-center space-x-4">
-  
+<div class="flex justify-center items-center space-x-6">
+  <!-- X（シェア）ボタン -->
+  <div class="flex flex-col items-center">
+    <a href="https://twitter.com/intent/tweet?text=<%= CGI.escape(share_text) %>&url=<%= CGI.escape(share_url) %>" 
+       target="_blank" rel="noopener noreferrer" class="flex flex-col items-center">
+      <img src="<%= asset_path('x.svg') %>" alt="Xでシェア" class="w-8 h-8 md:w-5 md:h-5 hover:opacity-70">
+      <span class="text-sm text-gray-600">シェア</span>
+    </a>
+  </div>
 
-  <a href="https://twitter.com/intent/tweet?text=<%= CGI.escape(share_text) %>&url=<%= CGI.escape(share_url) %>" 
-     target="_blank" rel="noopener noreferrer">
-    <img src="<%= asset_path('x.svg') %>" alt="Xでシェア" class="w-8 h-8 md:w-5 md:h-5 hover:opacity-70">
-  </a>
-
+  <!-- ブックマークボタン -->
   <% if user_signed_in? %>
-    <% if current_user.bookmarks.exists?(event: @event) %>
-      <%= button_to event_bookmark_path(@event), method: :delete, class: "p-2 rounded-full text-yellow-500 hover:text-yellow-600" do %>
-        <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 sm:w-8 sm:h-8">
-          <path stroke-linecap="round" stroke-linejoin="round" d="M17.593 3.322c1.1.128 1.907 1.077 1.907 2.185V21L12 17.25 4.5 21V5.507c0-1.108.806-2.057 1.907-2.185a48.507 48.507 0 0 1 11.186 0Z" />
-        </svg>
+    <div class="flex flex-col items-center">
+      <% if current_user.bookmarks.exists?(event: @event) %>
+        <%= button_to event_bookmark_path(@event), method: :delete, class: "p-2 rounded-full text-yellow-500 hover:text-yellow-600 flex flex-col items-center" do %>
+          <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 sm:w-8 sm:h-8">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M17.593 3.322c1.1.128 1.907 1.077 1.907 2.185V21L12 17.25 4.5 21V5.507c0-1.108.806-2.057 1.907-2.185a48.507 48.507 0 0 1 11.186 0Z" />
+          </svg>
+        <% end %>
+      <% else %>
+        <%= button_to event_bookmark_path(@event), method: :post, class: "p-2 rounded-full text-gray-500 hover:text-yellow-500 flex flex-col items-center" do %>
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 sm:w-8 sm:h-8">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M17.593 3.322c1.1.128 1.907 1.077 1.907 2.185V21L12 17.25 4.5 21V5.507c0-1.108.806-2.057 1.907-2.185a48.507 48.507 0 0 1 11.186 0Z" />
+          </svg>
+        <% end %>
       <% end %>
-    <% else %>
-      <%= button_to event_bookmark_path(@event), method: :post, class: "p-2 rounded-full text-gray-500 hover:text-yellow-500" do %>
-        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 sm:w-8 sm:h-8"">
-          <path stroke-linecap="round" stroke-linejoin="round" d="M17.593 3.322c1.1.128 1.907 1.077 1.907 2.185V21L12 17.25 4.5 21V5.507c0-1.108.806-2.057 1.907-2.185a48.507 48.507 0 0 1 11.186 0Z" />
-        </svg>
-      <% end %>
-    <% end %>
+    </div>
   <% end %>
 </div>
+
 
 
 
