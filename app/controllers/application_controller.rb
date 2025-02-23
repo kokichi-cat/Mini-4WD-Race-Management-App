@@ -1,6 +1,6 @@
 class ApplicationController < ActionController::Base
   # Only allow modern browsers supporting webp images, web push, badges, import maps, CSS nesting, and CSS :has.
-  allow_browser versions: :modern
+  # allow_browser versions: :modern
   # nameを保存できるように変更する。
   before_action :configure_permitted_parameters, if: :devise_controller?
   before_action :set_custom_cookie # クッキーを設定するメソッドを呼び出す
