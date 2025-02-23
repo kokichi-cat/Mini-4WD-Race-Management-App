@@ -1,6 +1,6 @@
-<!-- イベント結果一覧 -->
+<% events ||= [] %> <!-- 変数 events が nil の場合、空配列をセット -->
 <div class="overflow-x-auto">
-  <table class="table w-full text-center"> <!-- テーブル全体を中央揃え -->
+  <table class="table w-full text-center">
     <thead class="sticky top-0">
       <tr>
         <th class="text-lg font-bold">Date</th>
@@ -13,20 +13,13 @@
       </tr>
     </thead>
     <tbody class="bg-white">
-      <% @events.each do |event| %>
+      <% events.each do |event| %>
         <tr>
-          <!-- 日付 -->
           <td class="text-center"><%= event.date.strftime("%y/%m/%d") %></td>
-            
-          <!-- 大会名 -->
           <td class="text-center word-wrap">
             <%= link_to event.event_name, event_path(event), class: "text-blue-500 underline" %>
           </td>
-            
-          <!-- 会場名 -->
           <td class="text-center word-wrap"><%= event.venue %></td>
-            
-          <!-- タイム -->
           <td class="text-center">
             <% if event.race_times.present? %>
               <% event.race_times.each do |race_time| %>
@@ -36,8 +29,6 @@
               <span class="text-gray-500">未登録</span>
             <% end %>
           </td>
-
-          <!-- ユーザー名 -->
           <% unless local_assigns[:hide_user_name] %>
             <td class="text-center">
               <% if user_signed_in? %>

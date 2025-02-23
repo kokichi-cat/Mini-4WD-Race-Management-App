@@ -11,6 +11,8 @@ class Event < ApplicationRecord
   has_many :course_photos, dependent: :destroy # コース写真との関連
   has_many :machines, dependent: :destroy # マシーンとの関連
   has_many :race_times, dependent: :destroy # レースタイムとの関連
+  has_many :bookmarks, dependent: :destroy
+  has_many :bookmarked_users, through: :bookmarks, source: :user
 
   accepts_nested_attributes_for :race_times # ネストされたフォームからrace_timeを保存可能にする
   accepts_nested_attributes_for :machines, allow_destroy: true

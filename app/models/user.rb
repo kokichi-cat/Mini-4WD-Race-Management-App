@@ -7,6 +7,8 @@ class User < ApplicationRecord
          :confirmable, :omniauthable, omniauth_providers: [ :google_oauth2 ]
 
   has_many :events, dependent: :destroy # ユーザーが削除された時、Eventレコードも削除される
+  has_many :bookmarks, dependent: :destroy
+  has_many :bookmarked_events, through: :bookmarks, source: :event
 
   validates :uid, presence: true, uniqueness: { scope: :provider }, if: -> { uid.present? }
 

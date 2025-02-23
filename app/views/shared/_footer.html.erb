@@ -6,7 +6,7 @@
       <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 mb-1">
         <path stroke-linecap="round" stroke-linejoin="round" d="M8.25 6.75h12M8.25 12h12m-12 5.25h12M3.75 6.75h.007v.008H3.75V6.75Zm.375 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0ZM3.75 12h.007v.008H3.75V12Zm.375 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Zm-.375 5.25h.007v.008H3.75v-.008Zm.375 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Z" />
       </svg>
-      <span>イベント結果一覧</span>
+      <span>イベント一覧</span>
     <% end %>
 
     <!-- 記録するリンク -->
@@ -17,21 +17,22 @@
       <span>記録する</span>
     <% end %>
 
-    <!-- マイページリンク（仮置き） -->
     <% if user_signed_in? %>
+      <!-- ブックマーク（ログイン時のみ表示） -->
+      <%= link_to bookmarks_path, class: "flex flex-col items-center hover:text-gray-400" do %>
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 mb-1">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M17.593 3.322c1.1.128 1.907 1.077 1.907 2.185V21L12 17.25 4.5 21V5.507c0-1.108.806-2.057 1.907-2.185a48.507 48.507 0 0 1 11.186 0Z" />
+        </svg>
+        <span>ブックマーク</span>
+      <% end %>
+
+      <!-- マイページ（ログイン時のみ表示） -->
       <%= link_to mypage_path, class: "flex flex-col items-center hover:text-gray-400" do %>
         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 mb-1">
           <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 7.5A3.75 3.75 0 1 1 12 3.75 3.75 3.75 0 0 1 15.75 7.5ZM12 12a8.25 8.25 0 0 1 8.25 8.25v.75H3.75v-.75A8.25 8.25 0 0 1 12 12Z" />
         </svg>
         <span>マイページ</span>
       <% end %>
-    <% else %>
-      <span class="flex flex-col items-center text-gray-400 cursor-not-allowed">
-        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 mb-1">
-          <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 7.5A3.75 3.75 0 1 1 12 3.75 3.75 3.75 0 0 1 15.75 7.5ZM12 12a8.25 8.25 0 0 1 8.25 8.25v.75H3.75v-.75A8.25 8.25 0 0 1 12 12Z" />
-        </svg>
-        <span>ログインしてください</span>
-      </span>
-    <% end %>  
+    <% end %>
   </div>
 </footer>

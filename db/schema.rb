@@ -10,9 +10,19 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2025_01_23_124124) do
+ActiveRecord::Schema[7.2].define(version: 2025_02_22_070322) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "bookmarks", force: :cascade do |t|
+    t.bigint "user_id", null: false
+    t.bigint "event_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["event_id"], name: "index_bookmarks_on_event_id"
+    t.index ["user_id", "event_id"], name: "index_bookmarks_on_user_id_and_event_id", unique: true
+    t.index ["user_id"], name: "index_bookmarks_on_user_id"
+  end
 
   create_table "breakes", force: :cascade do |t|
     t.bigint "machine_id", null: false
@@ -168,6 +178,8 @@ ActiveRecord::Schema[7.2].define(version: 2025_01_23_124124) do
     t.index ["uid", "provider"], name: "index_users_on_uid_and_provider", unique: true
   end
 
+  add_foreign_key "bookmarks", "events"
+  add_foreign_key "bookmarks", "users"
   add_foreign_key "breakes", "machines"
   add_foreign_key "course_photos", "events"
   add_foreign_key "events", "users"

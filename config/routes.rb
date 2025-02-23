@@ -31,4 +31,9 @@ Rails.application.routes.draw do
   get "terms", to: "static_pages#terms", as: :terms
   get "privacy", to: "static_pages#privacy", as: :privacy
   # get "contact", to: "static_pages#contact", as: :contact　独自の回答フォームを作成したくなったらコメントアウト外す
+  resources :events do
+    resource :bookmark, only: [ :create, :destroy ]
+  end
+
+  get "bookmarks", to: "bookmarks#index"
 end
