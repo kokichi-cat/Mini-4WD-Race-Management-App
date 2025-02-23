@@ -2,6 +2,7 @@
 @tailwind components;
 @tailwind utilities;
 
+
 @layer components {
     .custom-logo {
         font-family: 'Orbitron', sans-serif; /* 適用するフォント */
