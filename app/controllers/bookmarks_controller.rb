@@ -15,6 +15,5 @@ class BookmarksController < ApplicationController
 
     def index
         @events = current_user.bookmarked_events.includes(:user, :race_times)
-    end   
+    end
 end
-  
