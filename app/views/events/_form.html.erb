@@ -44,31 +44,26 @@
       </div>
     <% end %>
 
-    <h3 class="text-xl font-semibold mt-6 mb-4">コース写真</h3>
-    <%= f.fields_for :course_photos do |photo| %>
-      <div class="form-control mb-4">
-        <%= photo.label :image_url, "コース写真", class: "label-text" %>
-        <%= photo.file_field :image_url, class: "file-input file-input-bordered" %>
-    
-        <% if photo.object.persisted? %>
-          <div class="mt-2">
-            <%= image_tag photo.object.image_url.url, class: "rounded shadow-lg", width: 100 %>
-            <label class="label cursor-pointer">
-              <%= photo.check_box :_destroy %>
-              <span class="label-text ml-2">この写真を削除</span>
-            </label>
-          </div>
-        <% end %>
-      </div>
-    <% end %>
+    <h3>コース写真</h3>
+    <div data-controller="course-photos">
+      <%= f.fields_for :course_photos do |photo_form| %>
+        <div class="photo-box" data-course-photos-target="photoBox">
+          <% if photo_form.object.image_url.present? %>
+            <%= image_tag photo_form.object.image_url.url, class: "preview" %>
+          <% else %>
+            <%= image_tag "", class: "preview" %>
+          <% end %>
 
-    <!-- 空の関連オブジェクトを追加 -->
-    <div class="form-control mb-4">
-      <%= f.fields_for :course_photos, @event.course_photos.build do |new_photo| %>
-        <%= new_photo.label :image_url, "新しいコース写真を追加", class: "label-text" %>
-        <%= new_photo.file_field :image_url, class: "file-input file-input-bordered" %>
+          <%= photo_form.file_field :image_url, class: "image_upload" %>
+          <%= photo_form.hidden_field :_destroy, value: "0", data: { course_photos_target: "hiddenDestroy" } %>
+          <button type="button" class="remove-photo" data-controller="course-photos" data-action="click->course-photos#remove">
+          削除
+          </button>
+        </div>
       <% end %>
-    </div> 
+    </div>
+
+
 
     
     <h3 class="text-xl font-semibold mt-6 mb-4">マシン情報</h3>

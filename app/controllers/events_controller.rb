@@ -9,6 +9,7 @@ class EventsController < ApplicationController
   def new
     @event = Event.new
     build_associations
+    build_course_photos # 追加: コース写真を最大4つまで確保
   end
 
   # 全員レース一覧
@@ -104,9 +105,10 @@ class EventsController < ApplicationController
 
   def edit
     @event = Event.find(params[:id])
+    build_course_photos # 追加: 既存の写真が4つ未満なら補充
+
 
     # 必要に応じて空の関連オブジェクトを追加
-    @event.course_photos.build if @event.course_photos.empty?
     @event.machines.each do |machine|
       machine.machine_photos.build if machine.machine_photos.empty?
     end
@@ -142,6 +144,11 @@ class EventsController < ApplicationController
     machine.mass_dampers.build if machine.mass_dampers.empty?
     machine.machine_photos.build if machine.machine_photos.empty?
     @event.course_photos.build if @event.course_photos.empty?
+  end
+
+  # コース写真を最大4つまで確保するメソッド
+  def build_course_photos
+    (4 - @event.course_photos.size).times { @event.course_photos.build } if @event.course_photos.size < 4
   end
 
   # ストロングパラメーター
