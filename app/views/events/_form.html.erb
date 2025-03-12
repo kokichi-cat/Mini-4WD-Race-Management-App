@@ -45,30 +45,80 @@
     <% end %>
 
     <h3 class="text-xl font-semibold mt-6 mb-4">コース写真</h3>
-    <%= f.fields_for :course_photos do |photo| %>
-      <div class="form-control mb-4">
-        <%= photo.label :image_url, "コース写真", class: "label-text" %>
-        <%= photo.file_field :image_url, class: "file-input file-input-bordered" %>
-    
-        <% if photo.object.persisted? %>
-          <div class="mt-2">
-            <%= image_tag photo.object.image_url.url, class: "rounded shadow-lg", width: 100 %>
-            <label class="label cursor-pointer">
-              <%= photo.check_box :_destroy %>
-              <span class="label-text ml-2">この写真を削除</span>
-            </label>
-          </div>
-        <% end %>
-      </div>
-    <% end %>
 
-    <!-- 空の関連オブジェクトを追加 -->
-    <div class="form-control mb-4">
-      <%= f.fields_for :course_photos, @event.course_photos.build do |new_photo| %>
-        <%= new_photo.label :image_url, "新しいコース写真を追加", class: "label-text" %>
-        <%= new_photo.file_field :image_url, class: "file-input file-input-bordered" %>
+    <div id="existing-photos" class="flex flex-wrap gap-4">
+      <% @event.course_photos.each do |photo| %>
+        <div class="relative">
+          <%= f.fields_for :course_photos, photo do |photo_fields| %>
+            <% if photo.image_url.present? %>
+              <%= image_tag photo.image_url.url, class: "rounded shadow-lg", width: 100 %>
+            <% else %>
+              <p class="text-gray-500">画像がありません</p>
+            <% end %>
+            
+            <label class="label cursor-pointer">
+              <%= photo_fields.check_box :_destroy, class: "hidden destroy-checkbox" %>
+              <button type="button" class="btn btn-error btn-sm mt-2 remove-photo-btn">削除</button>
+            </label>
+            <%= photo_fields.hidden_field :id %> <!-- 削除時にidを送信 -->
+          <% end %>
+        </div>
       <% end %>
-    </div> 
+    </div>
+
+
+    <!-- 新規追加用のフィールド -->
+    <div class="form-control mb-4">
+      <label class="label-text">新しいコース写真を追加（最大4枚）</label>
+      <%= f.file_field "course_photos_attributes[image_url][]", multiple: true, accept: "image/*", class: "file-input file-input-bordered photo-input" %>
+    </div>
+
+    <!-- 画像プレビュー用 -->
+    <div id="preview-container" class="flex flex-wrap gap-4 mt-4"></div>
+
+    <script>
+      document.addEventListener("DOMContentLoaded", function() {
+        const inputField = document.querySelector(".photo-input");
+        const previewContainer = document.getElementById("preview-container");
+        const removeButtons = document.querySelectorAll(".remove-photo-btn");
+
+        // 新規アップロード画像のプレビュー処理
+        if (inputField) {
+          inputField.addEventListener("change", function(event) {
+            previewContainer.innerHTML = ""; // 既存プレビューをクリア
+            Array.from(event.target.files).forEach(file => {
+              const reader = new FileReader();
+              reader.onload = function(e) {
+                const img = document.createElement("img");
+                img.src = e.target.result;
+                img.classList.add("rounded", "shadow-lg");
+                img.width = 100;
+                previewContainer.appendChild(img);
+              };
+              reader.readAsDataURL(file);
+            });
+          });
+        }
+
+        // 既存画像の削除処理
+        removeButtons.forEach(button => {
+          button.addEventListener("click", function(event) {
+            const container = event.target.closest(".relative");
+            const checkbox = container.querySelector(".destroy-checkbox");
+            checkbox.checked = true; // 削除フラグをON
+            container.style.display = "none"; // UI上で非表示
+          });
+        });
+      });
+    </script>
+
+
+
+
+
+    
+
+
 
     
     <h3 class="text-xl font-semibold mt-6 mb-4">マシン情報</h3>

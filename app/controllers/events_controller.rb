@@ -104,9 +104,9 @@ class EventsController < ApplicationController
 
   def edit
     @event = Event.find(params[:id])
-
+  
     # 必要に応じて空の関連オブジェクトを追加
-    @event.course_photos.build if @event.course_photos.empty?
+    @event.course_photos.build if @event.course_photos.blank? # 空の場合のみ追加
     @event.machines.each do |machine|
       machine.machine_photos.build if machine.machine_photos.empty?
     end
@@ -148,20 +148,21 @@ class EventsController < ApplicationController
   def event_params
     params.require(:event).permit(
       :date, :event_name, :venue, :weather, :temperature, :coment, :link, :tag_list,
-      course_photos_attributes: [ :id, :image_url, :_destroy ],
-      race_times_attributes: [ :id, :rap_time, :course_length, :_destroy ],
+      course_photos_attributes: [:id, :image_url, :_destroy], # 修正
+      race_times_attributes: [:id, :rap_time, :course_length, :_destroy],
       machines_attributes: [
         :id, :machine_name, :frame, :motor, :gear_ratio, :tire_diameter, :tire_type, :voltage, :speed, :other_comments, :body,
-        machine_photos_attributes: [ :id, :image_url, :_destroy ],
+        machine_photos_attributes: [:id, :image_url, :_destroy],
         gimmicks_attributes: [
           :id, :gimmick_type,
-          rollers_attributes: [ :id, :position, :material, :_destroy ]
+          rollers_attributes: [:id, :position, :material, :_destroy]
         ],
-        brakes_attributes: [ :id, :name, :color, :_destroy ],
-        mass_dampers_attributes: [ :id, :name, :_destroy ]
+        brakes_attributes: [:id, :name, :color, :_destroy],
+        mass_dampers_attributes: [:id, :name, :_destroy]
       ]
     )
   end
+  
 
   def set_event
     @event = Event.find(params[:id])
