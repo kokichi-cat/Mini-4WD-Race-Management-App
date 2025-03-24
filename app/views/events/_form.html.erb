@@ -24,7 +24,7 @@
     
     <div class="form-control mb-4">
       <%= f.label :temperature, "会場温度", class: "label-text" %>
-      <%= f.number_field :temperature, step: 0.1, class: "input input-bordered", data: { convert_halfwidth: true } %>
+      <%= f.number_field :temperature, step: 0.1, class: "input input-bordered" %>
     </div>
     
     <div class="form-control mb-4">
@@ -36,11 +36,11 @@
     <%= f.fields_for :race_times do |rt| %>
       <div class="form-control mb-4">
         <%= rt.label :rap_time, "ラップタイム", class: "label-text" %>
-        <%= rt.number_field :rap_time, step: 0.001, class: "input input-bordered", data: { convert_halfwidth: true } %>
+        <%= rt.number_field :rap_time, step: 0.001, class: "input input-bordered" %>
       </div>
       <div class="form-control mb-4">
         <%= rt.label :course_length, "コース全長", class: "label-text" %>
-        <%= rt.number_field :course_length, step: 0.001, class: "input input-bordered", data: { convert_halfwidth: true } %>
+        <%= rt.number_field :course_length, step: 0.001, class: "input input-bordered" %>
       </div>
     <% end %>
 
@@ -128,17 +128,17 @@
     
       <div class="form-control mb-4">
         <%= machine.label :tire_type, "タイヤ種", class: "label-text" %>
-        <%= machine.text_field :tire_type, class: "input input-bordered", data: { convert_halfwidth: true } %>
+        <%= machine.text_field :tire_type, class: "input input-bordered" %>
       </div>
 
       <div class="form-control mb-4">
         <%= machine.label :voltage, "電圧 (V)", class: "label-text" %>
-        <%= machine.number_field :voltage, step: 0.001, class: "input input-bordered", data: { convert_halfwidth: true } %>
+        <%= machine.number_field :voltage, step: 0.001, class: "input input-bordered" %>
       </div>
 
       <div class="form-control mb-4">
         <%= machine.label :speed, "時速 (km/s)", class: "label-text" %>
-        <%= machine.number_field :speed, step: 0.001, class: "input input-bordered", data: { convert_halfwidth: true } %>
+        <%= machine.number_field :speed, step: 0.001, class: "input input-bordered" %>
       </div>
 
       <div class="form-control mb-4">
