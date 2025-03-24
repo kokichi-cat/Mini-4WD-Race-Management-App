@@ -37,7 +37,18 @@ class EventsController < ApplicationController
     end
 
     # 検索条件が何も指定されていない場合、全てのイベントを取得
-    @events = @events.order(date: :desc, event_name: :asc, 'race_times.rap_time': :asc)
+    @events = @events.joins(:race_times).order(
+      Arel.sql("date DESC"),
+      Arel.sql("LEFT(event_name, LENGTH(event_name) - LENGTH(REGEXP_SUBSTR(event_name, '[0-9]+'))) DESC"),
+      Arel.sql("COALESCE(REGEXP_SUBSTR(event_name, '[0-9]+')::INT, 0) DESC"),
+      Arel.sql("race_times.rap_time ASC")
+    )
+
+
+
+
+
+    # @events = @events.order(date: :desc, event_name: :asc, 'race_times.rap_time': :asc)
     # .page(params[:page])
     # .per(10)
 
@@ -79,7 +90,12 @@ class EventsController < ApplicationController
     end
 
     # 日付順（最新のイベントが先）
-    @events = @events.order(date: :desc)
+    @events = @events.joins(:race_times).order(
+      Arel.sql("date DESC"),
+      Arel.sql("LEFT(event_name, LENGTH(event_name) - LENGTH(REGEXP_SUBSTR(event_name, '[0-9]+'))) DESC"),
+      Arel.sql("COALESCE(REGEXP_SUBSTR(event_name, '[0-9]+')::INT, 0) DESC"),
+      Arel.sql("race_times.rap_time ASC")
+    )
 
     @events = @events.page(params[:page]).per(10)
   end
