@@ -4,17 +4,17 @@
     <!-- イベントの日付、名前、会場、天気、気温、コメント -->
     <div class="form-control mb-4">
       <%= f.label :date, "日付", class: "label-text" %>
-      <%= f.date_field :date, required: true, class: "input input-bordered" %>
+      <%= f.date_field :date, required: true, class: "input input-bordered", data: { convert_halfwidth: true } %>
     </div>
     
     <div class="form-control mb-4">
       <%= f.label :event_name, "大会・イベント名", class: "label-text" %>
-      <%= f.text_field :event_name, required: true, class: "input input-bordered" %>
+      <%= f.text_field :event_name, required: true, class: "input input-bordered", data: { convert_halfwidth: true } %>
     </div>
     
     <div class="form-control mb-4">
       <%= f.label :venue, "会場・店舗名", class: "label-text" %>
-      <%= f.text_field :venue, required: true, class: "input input-bordered" %>
+      <%= f.text_field :venue, required: true, class: "input input-bordered", data: { convert_halfwidth: true } %>
     </div>
 
     <div class="form-control mb-4">
@@ -163,7 +163,23 @@
         
     <% end %>
     
-    
+    <script>
+      document.addEventListener("turbo:load", function () {
+        const convertToHalfWidth = (str) => {
+          return str.replace(/[０-９]/g, function (s) {
+            return String.fromCharCode(s.charCodeAt(0) - 0xfee0);
+          });
+        };
+
+        document.querySelectorAll("[data-convert-halfwidth]").forEach((input) => {
+          input.addEventListener("input", (event) => {
+            const target = event.target;
+            target.value = convertToHalfWidth(target.value);
+          });
+        });
+      });
+    </script>
+
     
     <%= f.submit "保存する", class: "btn bg-orange-500 text-white hover:bg-orange-300" %>
   <% end %>
